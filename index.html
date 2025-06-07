@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kalkulator Diskon 🎯</title>
+  <style>
+    :root {
+      --primary: #ff7043;
+      --primary-hover: #e64a19;
+      --text: #4e342e;
+      --background: #fcefe3;
+      --input-border: #a1887f;
+      --card-bg: #fff3e0;
+      --card-border: #ffab91;
+      --radius: 8px;
+    }
+
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+    }
+
+    main {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      padding: 2rem;
+    }
+
+    h1 {
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      border: 2px solid var(--input-border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: var(--primary);
+      border: none;
+      border-radius: var(--radius);
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .result {
+      margin-top: 2rem;
+      background-color: var(--card-bg);
+      border: 2px dashed var(--card-border);
+      padding: 1rem;
+      border-radius: var(--radius);
+      font-size: 1.05rem;
+      white-space: pre-wrap;
+      min-height: 70px;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <h1>🧮 Kalkulator Diskon</h1>
+
+    <div class="form-group">
+      <label for="hargaAwal">💰 Harga Awal (Rp)</label>
+      <input type="number" id="hargaAwal" placeholder="Contoh: 100000" />
+    </div>
+
+    <div class="form-group">
+      <label for="diskon">🔻 Diskon (%)</label>
+      <input type="number" id="diskon" placeholder="Contoh: 20" />
+    </div>
+
+    <button id="btnHitung">✅ Hitung Diskon</button>
+
+    <div class="result" id="hasil"></div>
+  </main>
+
+  <script>
+    const hargaInput = document.getElementById("hargaAwal");
+    const diskonInput = document.getElementById("diskon");
+    const hasilDiv = document.getElementById("hasil");
+    const btnHitung = document.getElementById("btnHitung");
+
+    btnHitung.addEventListener("click", () => {
+      const harga = parseFloat(hargaInput.value);
+      const diskon = parseFloat(diskonInput.value);
+
+      if (isNaN(harga) || isNaN(diskon)) {
+        return tampilkanKetik("⚠️ Masukkan angka yang valid.");
+      }
+
+      const potongan = (diskon / 100) * harga;
+      const total = harga - potongan;
+
+      const hasilTeks =
+        `💵 Harga Awal: Rp ${harga.toLocaleString("id-ID")}\n` +
+        `🧾 Potongan Diskon: Rp ${potongan.toLocaleString("id-ID")}\n` +
+        `🎁 Harga Setelah Diskon: Rp ${total.toLocaleString("id-ID")}`;
+
+      tampilkanKetik(hasilTeks);
+    });
+
+    function tampilkanKetik(teks, kecepatan = 20) {
+      hasilDiv.textContent = "";
+      let index = 0;
+
+      function ketik() {
+        if (index < teks.length) {
+          hasilDiv.textContent += teks.charAt(index);
+          index++;
+          setTimeout(ketik, kecepatan);
+        }
+      }
+
+      ketik();
+    }
+  </script>
+
+</body>
+</html>
